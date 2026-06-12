@@ -10,11 +10,12 @@ using System.Windows.Forms;
 
 namespace Alarma
 {
-    public partial class Form1 : Form
+    public partial class Interfaz : Form
     {
-        public Form1()
+        public Interfaz()
         {
             InitializeComponent();
+
         }
-    }
+    }      
 }
