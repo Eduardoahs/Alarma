@@ -10,124 +10,104 @@ using System.Windows.Forms;
 
 namespace Alarma
 {
+    
+    public partial class Interfaz : Form
+    {
     private TimeSpan horaAlarma;
     private bool alarmaSonando = false;
 
 
     private Memoria memoria = Memoria.Instancia;
-    public partial class Interfaz : Form
-    {
         public Interfaz()
         {
             InitializeComponent();
 
         }
-
-            private void Form1_Load(object sender, EventArgs e)
-            {
-                timerHora.Enabled = true;
-                timerAlarma.Enabled = true;
-            }
-
-            private void btnSnooze_Click(object sender, EventArgs e)
+            public string RevisarEstadoAlarma()
             {
                 if (alarmaSonando)
                 {
-                    DetenerSonido();
-                    DetenerAvisoVisual();
-
-                    horaAlarma = DateTime.Now.AddMinutes(5).TimeOfDay;
-                    memoria.nuevaHora = horaAlarma;
-                    memoria.alarmaActiva = true;
-                    alarmaSonando = false;
-
-                    lblEstadoAlarma.Text = $"Alarma pospuesta hasta {horaAlarma:hh\\:mm}";
-                    lblEstadoAlarma.ForeColor = System.Drawing.Color.Orange;
-                    lblEstadoDetallado.Text = "Alarma: POSPUESTA (SNOOZE) | Próxima alarma en 5 min";
+                    return "SONANDO";
+                }
+                else if (memoria.alarmaActiva)
+                {
+                    return $"ACTIVADA - Hora: {memoria.nuevaHora:hh\\:mm}";
+                }
+                else
+                {
+                    return "DESACTIVADA";
                 }
             }
 
-            private void btnApagarAlarma_Click(object sender, EventArgs e)
+            
+            public bool EjecutarSnooze()
             {
-                if (alarmaSonando)
+                if (!alarmaSonando)
                 {
-                    DetenerSonido();
-                    DetenerAvisoVisual();
-
-                    memoria.alarmaActiva = false;
-                    alarmaSonando = false;
-
-                    lblEstadoAlarma.Text = "Desactivada";
-                    lblEstadoAlarma.ForeColor = System.Drawing.Color.Red;
-                    lblEstadoDetallado.Text = "Alarma: DESACTIVADA | Estado: INACTIVA";
-                    lblCuentaRegresiva.Text = "Alarma apagada";
-                }
-            }
-
-            private void TimerAlarma_Tick(object sender, EventArgs e)
-            {
-                DateTime ahora = DateTime.Now;
-                TimeSpan horaActual = ahora.TimeOfDay;
-
-                memoria.RevisarAlarma(horaActual);
-
-                if (memoria.sonidoAlarma && !alarmaSonando)
-                {
-                    alarmaSonando = true;
-                    ActivarAvisoVisual();
+                    return false; 
                 }
 
-                if (memoria.alarmaActiva && !alarmaSonando)
-                {
-                    lblEstadoDetallado.Text = "Alarma: ACTIVADA | Estado: ESPERANDO";
-                    lblEstadoDetallado.ForeColor = System.Drawing.Color.Green;
-
-                    TimeSpan tiempoRestante = new DateTime(ahora.Year, ahora.Month, ahora.Day,
-                        memoria.nuevaHora.Hours, memoria.nuevaHora.Minutes, 0) - ahora;
-
-                    if (tiempoRestante.TotalSeconds > 0)
-                    {
-                        lblCuentaRegresiva.Text = $"Faltan: {tiempoRestante.Minutes:D2}:{tiempoRestante.Seconds:D2}";
-                    }
-                    else if (tiempoRestante.TotalSeconds <= 0 && !alarmaSonando)
-                    {
-                        lblCuentaRegresiva.Text = "¡Alarma por sonar!";
-                    }
-                }
-                else if (!memoria.alarmaActiva)
-                {
-                    lblEstadoDetallado.Text = "Alarma: DESACTIVADA | Estado: INACTIVA";
-                    lblEstadoDetallado.ForeColor = System.Drawing.Color.Red;
-                }
-                else if (alarmaSonando)
-                {
-                    lblEstadoDetallado.Text = "Alarma: ACTIVADA | Estado: SONANDO 🔔";
-                    lblEstadoDetallado.ForeColor = System.Drawing.Color.Red;
-                }
-            }
-
-            private void ActivarAvisoVisual()
-            {
-                this.BackColor = System.Drawing.Color.Red;
-                lblEstadoAlarma.Text = "¡ALARMA SONANDO!";
-                lblEstadoAlarma.ForeColor = System.Drawing.Color.Yellow;
-                lblEstadoDetallado.Text = "🔔 ¡ALARMA ACTIVADA! 🔔";
-            }
-
-            private void DetenerAvisoVisual()
-            {
-                this.BackColor = System.Drawing.SystemColors.Control;
-                if (!memoria.alarmaActiva)
-                {
-                    lblEstadoAlarma.Text = "Desactivada";
-                    lblEstadoAlarma.ForeColor = System.Drawing.Color.Red;
-                }
-            }
-
-            private void DetenerSonido()
-            {
+                
                 memoria.sonidoAlarma = false;
+                alarmaSonando = false;
+
+                
+                memoria.nuevaHora = DateTime.Now.AddMinutes(5).TimeOfDay;
+                memoria.alarmaActiva = true;
+
+                return true; 
+            }
+
+            
+            public bool EjecutarApagar()
+            {
+                if (!alarmaSonando && !memoria.alarmaActiva)
+                {
+                    return false; 
+                }
+
+                
+                memoria.alarmaActiva = false;
+                memoria.sonidoAlarma = false;
+                alarmaSonando = false;
+
+                return true; 
+            }
+
+            
+            internal class Memoria
+            {
+                public TimeSpan nuevaHora;
+                public bool alarmaActiva = false;
+                public bool sonidoAlarma = false;
+
+                private static Memoria singleton;
+
+                private Memoria() { }
+
+                public static Memoria Instancia
+                {
+                    get
+                    {
+                        if (singleton == null)
+                        {
+                            singleton = new Memoria();
+                        }
+                        return singleton;
+                    }
+                }
+
+                public void RevisarAlarma(TimeSpan horaActual)
+                {
+                    if (alarmaActiva == true)
+                    {
+                        if (horaActual.Hours == nuevaHora.Hours && horaActual.Minutes == nuevaHora.Minutes)
+                        {
+                            sonidoAlarma = true;
+                            new System.Media.SoundPlayer(Properties.Resources.alarma).PlayLooping();
+                        }
+                    }
+                }
             }
         }
     }
-}
