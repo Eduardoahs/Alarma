@@ -72,6 +72,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "APAGAR";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.btnApagarAlarma_Click);
             // 
             // button2
             // 
@@ -86,6 +87,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "POSPONER";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.btnSnooze_Click);
             // 
             // button3
             // 
@@ -103,7 +105,7 @@
             // 
             // Interfaz
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.ClientSize = new System.Drawing.Size(782, 566);
