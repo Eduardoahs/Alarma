@@ -1,6 +1,6 @@
 ﻿namespace Alarma
 {
-    partial class Interfaz
+    partial class Form1
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -33,10 +33,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.LblEstadoAlarma = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -76,7 +73,6 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "APAGAR";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.btnApagarAlarma_Click);
             // 
             // button2
             // 
@@ -91,7 +87,6 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "POSPONER";
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.btnSnooze_Click);
             // 
             // button3
             // 
@@ -107,60 +102,35 @@
             this.button3.Text = "ACTIVAR";
             this.button3.UseVisualStyleBackColor = false;
             // 
-            // LblEstadoAlarma
-            // 
-            this.LblEstadoAlarma.AutoSize = true;
-            this.LblEstadoAlarma.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblEstadoAlarma.ForeColor = System.Drawing.Color.Red;
-            this.LblEstadoAlarma.Location = new System.Drawing.Point(212, 238);
-            this.LblEstadoAlarma.Name = "LblEstadoAlarma";
-            this.LblEstadoAlarma.Size = new System.Drawing.Size(336, 37);
-            this.LblEstadoAlarma.TabIndex = 6;
-            this.LblEstadoAlarma.Text = "ALARMA SONANDO";
-            this.LblEstadoAlarma.Visible = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Alarma.Properties.Resources.images__1_;
-            this.pictureBox1.Location = new System.Drawing.Point(545, 238);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(225, 225);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
-            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Red;
-            this.panel1.Location = new System.Drawing.Point(282, 294);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 100);
+            this.panel1.Size = new System.Drawing.Size(782, 566);
             this.panel1.TabIndex = 8;
             this.panel1.Visible = false;
             // 
-            // Interfaz
+            // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.ClientSize = new System.Drawing.Size(782, 566);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.LblEstadoAlarma);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.Name = "Interfaz";
+            this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -171,8 +141,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Label LblEstadoAlarma;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panel1;
     }
 }
